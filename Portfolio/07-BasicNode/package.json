@@ -7,7 +7,7 @@
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Donovan Eliam Aguilar Diaz",
+  "author": "Antonio Enriquez Velasco",
   "license": "ISC",
   "dependencies": {
     "star-wars-quotes": "^1.0.2",
