@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mongo DB - F1 test</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <img src="/images/StarLion.png" alt="lion brewery" />
+            <h1>Welcome to my F1 DB</h1>
+        </header>
+
+        <div class="form-container">
+            <form id="driverForm" action="/driver" method="POST">
+                <h2>Driver information</h2>
+                <input type="hidden" name="driverId" id="driverId" value="" />
+                
+                <div class="form-row">
+                    <input type="number" name="num" id="num" placeholder="Number" required />
+                    <input type="text" name="code" id="code" placeholder="Code" maxlength="3" required />
+                    <input type="text" name="forename" id="forename" placeholder="Name" required />
+                    <input type="text" name="surname" id="surname" placeholder="Last name" required />
+                </div>
+                
+                <div class="form-row">
+                    <label for="dob">Date of birth: </label>
+                    <input type="date" name="dob" id="dob" required />
+                    <label for="url">Biography URL: </label>
+                    <input type="url" name="url" id="url" required />
+                </div>
+                
+                <div class="form-row">
+                    <label for="nationality">Nationality: </label>
+                    <select name="nationality" id="nationality" required>
+                        <option value="">Select nationality</option>
+                        <% countries.forEach(country => { %>
+                            <option value="<%= country.code %>"><%= country.label %></option>
+                        <% }) %>
+                    </select>
+                    
+                    <label for="teamId">Team: </label>
+                    <select name="teamId" id="teamId" required>
+                        <option value="">Select team</option>
+                        <% teams.forEach(team => { %>
+                            <option value="<%= team._id %>"><%= team.name %></option>
+                        <% }) %>
+                    </select>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        <span id="submitBtnText">Add Driver</span>
+                    </button>
+                    <button type="button" class="btn btn-secondary" id="cancelBtn" style="display:none;">Cancel</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="view-toggle">
+            <h2>View by:</h2>
+            <button class="btn btn-toggle active" id="viewByDrivers">Drivers</button>
+            <button class="btn btn-toggle" id="viewByTeams">Teams</button>
+        </div>
+
+        <div id="driversView" class="content-view">
+            <h2>Drivers List</h2>
+            <% if (drivers && drivers.length > 0) { %>
+                <div class="drivers-grid">
+                    <% drivers.forEach(driver => { %>
+                        <div class="driver-card" data-driver-id="<%= driver._id %>">
+                            <div class="driver-view">
+                                <div class="driver-header">
+                                    <span class="driver-number">#<%= driver.num %></span>
+                                    <span class="driver-code"><%= driver.code %></span>
+                                </div>
+                                <h3 class="driver-name"><%= driver.forename %> <%= driver.surname %></h3>
+                                <div class="driver-info">
+                                    <p><strong>DOB:</strong> <%= new Date(driver.dob).toLocaleDateString() %></p>
+                                    <p><strong>Nationality:</strong> <%= driver.nationality %></p>
+                                    <p><strong>Team:</strong> <%= driver.team ? driver.team.name : 'N/A' %></p>
+                                    <p><strong>URL:</strong> <a href="<%= driver.url %>" target="_blank">Wikipedia</a></p>
+                                </div>
+                                <div class="driver-actions">
+                                    <button class="btn btn-edit" onclick="toggleEditMode('<%= driver._id %>')">Edit</button>
+                                    <button class="btn btn-delete" onclick="deleteDriver('<%= driver._id %>')">Delete</button>
+                                </div>
+                            </div>
+                            
+                            <div class="driver-edit" style="display: none;">
+                                <div class="edit-row">
+                                    <input type="number" class="edit-num" value="<%= driver.num %>" />
+                                    <input type="text" class="edit-code" value="<%= driver.code %>" maxlength="3" />
+                                </div>
+                                <div class="edit-row">
+                                    <input type="text" class="edit-forename" value="<%= driver.forename %>" />
+                                    <input type="text" class="edit-surname" value="<%= driver.surname %>" />
+                                </div>
+                                <div class="edit-row">
+                                    <label>DOB:</label>
+                                    <input type="date" class="edit-dob" value="<%= driver.dob.toISOString().split('T')[0] %>" />
+                                </div>
+                                <div class="edit-row">
+                                    <label>Nationality:</label>
+                                    <select class="edit-nationality">
+                                        <% countries.forEach(country => { %>
+                                            <option value="<%= country.code %>" <%= driver.nationality === country.code ? 'selected' : '' %>><%= country.label %></option>
+                                        <% }) %>
+                                    </select>
+                                </div>
+                                <div class="edit-row">
+                                    <label>Team:</label>
+                                    <select class="edit-team">
+                                        <% teams.forEach(team => { %>
+                                            <option value="<%= team._id %>" <%= driver.team && driver.team._id.toString() === team._id.toString() ? 'selected' : '' %>><%= team.name %></option>
+                                        <% }) %>
+                                    </select>
+                                </div>
+                                <div class="edit-row">
+                                    <label>URL:</label>
+                                    <input type="url" class="edit-url" value="<%= driver.url %>" />
+                                </div>
+                                <div class="driver-actions">
+                                    <button class="btn btn-save" onclick="saveDriver('<%= driver._id %>')">Save</button>
+                                    <button class="btn btn-cancel" onclick="toggleEditMode('<%= driver._id %>')">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            <% } else { %>
+                <p class="empty-message">No drivers in the database yet.</p>
+            <% } %>
+        </div>
+
+        <div id="teamsView" class="content-view" style="display: none;">
+            <h2>Teams List</h2>
+            <% if (teams && teams.length > 0) { %>
+                <div class="teams-grid">
+                    <% teams.forEach(team => { %>
+                        <div class="team-card">
+                            <h3 class="team-name"><%= team.name %></h3>
+                            <div class="team-info">
+                                <p><strong>Nationality:</strong> <%= team.nationality %></p>
+                                <p><strong>URL:</strong> <a href="<%= team.url %>" target="_blank">Wikipedia</a></p>
+                            </div>
+                            <div class="team-drivers">
+                                <h4>Drivers:</h4>
+                                <% const teamDrivers = drivers.filter(d => d.team && d.team._id.toString() === team._id.toString()); %>
+                                <% if (teamDrivers.length > 0) { %>
+                                    <ul>
+                                        <% teamDrivers.forEach(driver => { %>
+                                            <li>#<%= driver.num %> <%= driver.forename %> <%= driver.surname %></li>
+                                        <% }) %>
+                                    </ul>
+                                <% } else { %>
+                                    <p class="no-drivers">No drivers</p>
+                                <% } %>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            <% } else { %>
+                <p class="empty-message">No teams in the database yet.</p>
+            <% } %>
+        </div>
+    </div>
+
+    <script src="/js/main.js"></script>
+</body>
+
+</html>

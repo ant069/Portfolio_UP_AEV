@@ -53,8 +53,129 @@ let countries = [
   { code: "DEN", label: "Denmark" },
 ];
 
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/public/html/index.html");
+// Middleware to load data for root path
+async function loadDataMiddleware(req, res, next) {
+  try {
+    const drivers = await Driver.find({}).sort({ num: 1 });
+    const teams = await Team.find({}).sort({ name: 1 });
+    req.appData = { drivers, teams, countries };
+    next();
+  } catch (error) {
+    console.error("Error loading data:", error);
+    res.status(500).send("Error loading data");
+  }
+}
+
+// Root route with middleware
+app.get("/", loadDataMiddleware, (req, res) => {
+  res.render("index", req.appData);
+});
+
+// Add a new driver
+app.post("/driver", async (req, res) => {
+  try {
+    const { num, code, forename, surname, dob, nationality, url, teamId } = req.body;
+    
+    // Find the team
+    const team = await Team.findById(teamId);
+    if (!team) {
+      return res.status(400).send("Team not found");
+    }
+
+    // Create new driver
+    const driver = new Driver({
+      num: parseInt(num),
+      code,
+      forename,
+      surname,
+      dob: new Date(dob),
+      nationality,
+      url,
+      team: team.toObject()
+    });
+
+    await driver.save();
+    res.redirect("/");
+  } catch (error) {
+    console.error("Error adding driver:", error);
+    res.status(500).send("Error adding driver");
+  }
+});
+
+// Update a driver
+app.put("/driver/:id", async (req, res) => {
+  try {
+    const { num, code, forename, surname, dob, nationality, url, teamId } = req.body;
+    
+    // Find the team
+    const team = await Team.findById(teamId);
+    if (!team) {
+      return res.status(400).json({ error: "Team not found" });
+    }
+
+    // Update driver
+    const driver = await Driver.findByIdAndUpdate(
+      req.params.id,
+      {
+        num: parseInt(num),
+        code,
+        forename,
+        surname,
+        dob: new Date(dob),
+        nationality,
+        url,
+        team: team.toObject()
+      },
+      { new: true }
+    );
+
+    if (!driver) {
+      return res.status(404).json({ error: "Driver not found" });
+    }
+
+    res.json({ success: true, driver });
+  } catch (error) {
+    console.error("Error updating driver:", error);
+    res.status(500).json({ error: "Error updating driver" });
+  }
+});
+
+// Delete a driver
+app.delete("/driver/:id", async (req, res) => {
+  try {
+    const driver = await Driver.findByIdAndDelete(req.params.id);
+    
+    if (!driver) {
+      return res.status(404).json({ error: "Driver not found" });
+    }
+
+    res.json({ success: true, message: "Driver deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting driver:", error);
+    res.status(500).json({ error: "Error deleting driver" });
+  }
+});
+
+// Get all drivers (API endpoint)
+app.get("/api/drivers", async (req, res) => {
+  try {
+    const drivers = await Driver.find({}).sort({ num: 1 });
+    res.json(drivers);
+  } catch (error) {
+    console.error("Error getting drivers:", error);
+    res.status(500).json({ error: "Error getting drivers" });
+  }
+});
+
+// Get all teams (API endpoint)
+app.get("/api/teams", async (req, res) => {
+  try {
+    const teams = await Team.find({}).sort({ name: 1 });
+    res.json(teams);
+  } catch (error) {
+    console.error("Error getting teams:", error);
+    res.status(500).json({ error: "Error getting teams" });
+  }
 });
 
 app.listen(3000, (err) => {
