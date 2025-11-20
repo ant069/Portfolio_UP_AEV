@@ -1,7 +1,9 @@
-# React Authentication
+# React with API (local & 3rd party)
 
 ---
 
-- Once again, re-use the exercise on our previous entry in our portfolio and add to it a login/signup form that will allow the user to be registered.
-- If the user has not been authenticated, he will only be able to see the data, but not modify it; this is, they will not be able to do like/dislike or add new comments. On the contrary, once authenticated, the user will be able to add/edit data and this should be saved in the backend.
-- Implement the state management using Redux & Thunk
+- Recreate the exercise we did in the previous entry of the portfolio, but now provide the information from a backend server.
+- Use React-bootstrap elements to do a reactive design
+- Now, on every card, instead of displaying the detail of the movie below the cards, redirect it to a new component that should be only displayed via react-router
+- Make sure that the like/dislike functionality is still working.
+- Also make sure that the user can still save the comments through different sessions; that is, make sure you save the entries in a Mongo instance.
