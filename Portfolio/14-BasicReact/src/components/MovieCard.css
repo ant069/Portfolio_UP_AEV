@@ -1,0 +1,116 @@
+.movie-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  border: 2px solid transparent;
+}
+
+.movie-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+}
+
+.movie-card.blue:hover {
+  border-color: #4a9eff;
+  box-shadow: 0 12px 24px rgba(74, 158, 255, 0.4);
+}
+
+.movie-card.red:hover {
+  border-color: #ff4a4a;
+  box-shadow: 0 12px 24px rgba(255, 74, 74, 0.4);
+}
+
+.movie-card-image-container {
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  background: #000;
+}
+
+.movie-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.3s ease;
+}
+
+.movie-card:hover .movie-card-image {
+  transform: scale(1.05);
+}
+
+.movie-card-content {
+  padding: 20px;
+}
+
+.movie-title {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+  color: #ffd700;
+  text-transform: capitalize;
+}
+
+.movie-year {
+  color: #aaa;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+}
+
+.movie-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.like-dislike {
+  display: flex;
+  gap: 10px;
+}
+
+.like-btn,
+.dislike-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.like-btn:hover {
+  background: rgba(74, 158, 255, 0.3);
+  border-color: #4a9eff;
+}
+
+.dislike-btn:hover {
+  background: rgba(255, 74, 74, 0.3);
+  border-color: #ff4a4a;
+}
+
+.more-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  color: #fff;
+  padding: 10px 25px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.85rem;
+}
+
+.more-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.more-btn:active {
+  transform: scale(0.98);
+}
