@@ -1,26 +1,26 @@
-# Express Authentication Setup - Instructions
+# Configuración de Autenticación Express - Instrucciones
 
-## ✅ Completed Implementation
+## ✅ Implementación Completa
 
-This project now includes all the required features from the README:
+Este proyecto ahora incluye todas las funcionalidades requeridas del README:
 
-### Features Implemented:
-1. ✅ **User Registration** - Form with username, email, and password
-2. ✅ **Passport-Local-Mongoose** - User authentication and session management
-3. ✅ **Login System** - Users can login with username and password
-4. ✅ **Logout Method** - Users can logout and end their session
-5. ✅ **Protected Routes** - Cannot access `/secrets` without authentication
-6. ✅ **Environment Variables** - Session secret stored in `.env` file
-7. ✅ **Google OAuth 2.0** - Social login with Google
-8. ✅ **Cookie Parser** - Session cookies are set and validated
-9. ✅ **Secret Submission** (Extra) - Users can submit and view secrets
+### Características Implementadas:
+1. ✅ **Registro de Usuarios** - Formulario con username, email y password
+2. ✅ **Passport-Local-Mongoose** - Autenticación de usuarios y gestión de sesiones
+3. ✅ **Sistema de Login** - Los usuarios pueden iniciar sesión con usuario y contraseña
+4. ✅ **Método de Logout** - Los usuarios pueden cerrar sesión
+5. ✅ **Rutas Protegidas** - No se puede acceder a `/secrets` sin autenticación
+6. ✅ **Variables de Entorno** - Secret de sesión almacenado en archivo `.env`
+7. ✅ **Google OAuth 2.0** - Inicio de sesión social con Google
+8. ✅ **Cookie Parser** - Las cookies de sesión se establecen y validan
+9. ✅ **Envío de Secretos** (Extra) - Los usuarios pueden enviar y ver secretos
 
 ---
 
-## 🚀 Setup Instructions
+## 🚀 Instrucciones de Configuración
 
-### 1. Install Dependencies
-All packages have already been installed:
+### 1. Instalar Dependencias
+Todos los paquetes ya han sido instalados:
 - express
 - mongoose
 - passport
@@ -33,184 +33,183 @@ All packages have already been installed:
 - ejs
 - mongoose-findorcreate
 
-### 2. Configure Environment Variables
+### 2. Configurar Variables de Entorno
 
-Open the `.env` file and update the following:
+Abre el archivo `.env` y actualiza lo siguiente:
 
 ```env
-# Change this to a random, secure string
-SESSION_SECRET=your_super_secret_session_key_here_change_this
+# Cambia esto por una cadena aleatoria y segura
+SESSION_SECRET=tu_clave_secreta_super_segura_cambiar_esto
 
-# Get these from Google Cloud Console
-GOOGLE_CLIENT_ID=your_google_client_id_here
-GOOGLE_CLIENT_SECRET=your_google_client_secret_here
+# Obtén estas credenciales de Google Cloud Console
+GOOGLE_CLIENT_ID=tu_google_client_id_aqui
+GOOGLE_CLIENT_SECRET=tu_google_client_secret_aqui
 ```
 
-### 3. Setup Google OAuth 2.0
+### 3. Configurar Google OAuth 2.0
 
-To enable Google authentication:
+Para habilitar la autenticación con Google:
 
-1. Go to [Google Cloud Console](https://console.cloud.google.com/)
-2. Create a new project or select existing one
-3. Navigate to: **APIs & Services > Credentials**
-4. Configure **OAuth Consent Screen**:
-   - User Type: External (or Internal for workspace)
-   - App name: Your app name
-   - User support email: Your email
-   - Developer contact: Your email
-   - Scopes: `email`, `profile`, `openid`
+1. Ve a [Google Cloud Console](https://console.cloud.google.com/)
+2. Crea un nuevo proyecto o selecciona uno existente
+3. Navega a: **APIs y Servicios > Credenciales**
+4. Configura la **Pantalla de Consentimiento OAuth**:
+   - Tipo de usuario: Externo (o Interno para workspace)
+   - Nombre de la aplicación: Tu nombre de app
+   - Email de soporte al usuario: Tu email
+   - Contacto del desarrollador: Tu email
+   - Ámbitos: `email`, `profile`, `openid`
 
-5. Create **OAuth 2.0 Client ID**:
-   - Application type: Web application
-   - Name: LOTR Authentication
-   - Authorized JavaScript origins: `http://localhost:3000`
-   - Authorized redirect URIs: `http://localhost:3000/auth/google/secrets`
+5. Crea **ID de Cliente OAuth 2.0**:
+   - Tipo de aplicación: Aplicación web
+   - Nombre: LOTR Authentication
+   - Orígenes de JavaScript autorizados: `http://localhost:3000`
+   - URIs de redireccionamiento autorizados: `http://localhost:3000/auth/google/secrets`
 
-6. Copy the **Client ID** and **Client Secret** to your `.env` file
+6. Copia el **Client ID** y **Client Secret** a tu archivo `.env`
 
-### 4. Start MongoDB
+### 4. Iniciar MongoDB
 
-Make sure MongoDB is running on your system:
+Asegúrate de que MongoDB esté corriendo en tu sistema:
 ```bash
-# Windows - If MongoDB is installed as a service, it should already be running
-# Or start it manually with:
+# Windows - Si MongoDB está instalado como servicio, ya debería estar corriendo
+# O inícialo manualmente con:
 mongod
 ```
 
-### 5. Run the Application
+### 5. Ejecutar la Aplicación
 
 ```bash
 npm start
 ```
 
-Or for development with auto-restart:
+O para desarrollo con reinicio automático:
 ```bash
 npm install -g nodemon
 nodemon server.js
 ```
 
-The server will start on: **http://localhost:3000**
+El servidor iniciará en: **http://localhost:3000**
 
 ---
 
-## 🧪 Testing the Application
+## 🧪 Probar la Aplicación
 
-### Test Local Authentication:
-1. Go to `http://localhost:3000`
-2. Click **Register**
-3. Create an account with username, email, and password
-4. You'll be automatically logged in and redirected to `/secrets`
-5. Try logging out and logging back in
-6. Try accessing `/secrets` directly (should redirect to login)
+### Probar Autenticación Local:
+1. Ve a `http://localhost:3000`
+2. Haz clic en **Register** (Registrarse)
+3. Crea una cuenta con username, email y password
+4. Serás automáticamente autenticado y redirigido a `/secrets`
+5. Prueba cerrar sesión y volver a iniciar sesión
+6. Intenta acceder a `/secrets` directamente (debería redirigir al login)
 
-### Test Google OAuth:
-1. Click **Sign in with Google** on login or register page
-2. Authorize with your Google account
-3. You'll be redirected to the secrets page
+### Probar Google OAuth:
+1. Haz clic en **Iniciar sesión con Google** en la página de login o registro
+2. Autoriza con tu cuenta de Google
+3. Serás redirigido a la página de secretos
 
-### Test Secret Submission:
-1. After logging in, click **Submit a Secret**
-2. Enter your secret and submit
-3. View all secrets on the secrets page
+### Probar Envío de Secretos:
+1. Después de iniciar sesión, haz clic en **Submit a Secret**
+2. Ingresa tu secreto y envíalo
+3. Ve todos los secretos en la página de secretos
 
-### Test Cookie Functionality:
-1. Open Chrome DevTools (F12)
-2. Go to **Application > Cookies > http://localhost:3000**
-3. Look for `connect.sid` cookie - this is your session
-4. When you logout, the session is destroyed
+### Probar Funcionalidad de Cookies:
+1. Abre las Herramientas de Desarrollo de Chrome (F12)
+2. Ve a **Application > Cookies > http://localhost:3000**
+3. Busca la cookie `connect.sid` - esta es tu sesión
+4. Cuando cierres sesión, la sesión se destruye
 
-### Test Protected Routes:
-1. Open a new incognito/private window
-2. Try to access `http://localhost:3000/secrets` directly
-3. You should be redirected to `/login`
+### Probar Rutas Protegidas:
+1. Abre una nueva ventana de incógnito/privada
+2. Intenta acceder a `http://localhost:3000/secrets` directamente
+3. Deberías ser redirigido a `/login`
 
 ---
 
-## 📁 Project Structure
+## 📁 Estructura del Proyecto
 
 ```
 13-ExpressAuthentication/
-├── server.js              # Main application file with all routes
-├── .env                   # Environment variables (SECRET KEYS)
-├── .gitignore            # Git ignore file
-├── package.json          # Dependencies
-├── README.md             # Original requirements
-├── SETUP.md              # This file
-├── RESUMEN.md            # Spanish summary
+├── server.js              # Archivo principal con todas las rutas
+├── .env                   # Variables de entorno (CLAVES SECRETAS)
+├── .gitignore            # Archivo para ignorar en git
+├── package.json          # Dependencias
+├── README.md             # Requisitos originales
+├── SETUP.md              # Este archivo
 ├── public/
 │   ├── css/
 │   │   └── style.css
 │   ├── html/
-│   │   ├── index.html    # Updated home page
+│   │   ├── index.html    # Página de inicio actualizada
 │   │   └── secret.html
 │   └── images/
-└── views/                # EJS templates
-    ├── register.ejs      # Registration form
-    ├── login.ejs         # Login form
-    ├── secrets.ejs       # Protected secrets page
-    └── submit.ejs        # Secret submission form
+└── views/                # Plantillas EJS
+    ├── register.ejs      # Formulario de registro
+    ├── login.ejs         # Formulario de login
+    ├── secrets.ejs       # Página protegida de secretos
+    └── submit.ejs        # Formulario de envío de secretos
 ```
 
 ---
 
-## 🔒 Security Features
+## 🔒 Características de Seguridad
 
-1. **Password Hashing** - Passwords are hashed using passport-local-mongoose
-2. **Session Management** - Express sessions with secure cookies
-3. **Environment Variables** - Sensitive data stored in .env
-4. **Authentication Middleware** - Routes protected with `isAuthenticated()`
-5. **OAuth 2.0** - Secure third-party authentication with Google
-
----
-
-## 📝 Routes
-
-### Public Routes:
-- `GET /` - Home page
-- `GET /register` - Registration form
-- `GET /login` - Login form
-- `POST /register` - Handle registration
-- `POST /login` - Handle login
-
-### Protected Routes (require authentication):
-- `GET /secrets` - View all secrets
-- `GET /submit` - Secret submission form
-- `POST /submit` - Handle secret submission
-- `GET /logout` - Logout user
-
-### OAuth Routes:
-- `GET /auth/google` - Initiate Google OAuth
-- `GET /auth/google/secrets` - Google OAuth callback
+1. **Hash de Contraseñas** - Las contraseñas se hashean usando passport-local-mongoose
+2. **Gestión de Sesiones** - Sesiones de Express con cookies seguras
+3. **Variables de Entorno** - Datos sensibles almacenados en .env
+4. **Middleware de Autenticación** - Rutas protegidas con `isAuthenticated()`
+5. **OAuth 2.0** - Autenticación segura de terceros con Google
 
 ---
 
-## 🐛 Troubleshooting
+## 📝 Rutas
 
-**Issue**: Cannot connect to MongoDB
-- **Solution**: Make sure MongoDB is running on `mongodb://127.0.0.1:27017/`
+### Rutas Públicas:
+- `GET /` - Página de inicio
+- `GET /register` - Formulario de registro
+- `GET /login` - Formulario de login
+- `POST /register` - Procesar registro
+- `POST /login` - Procesar login
 
-**Issue**: Google OAuth not working
-- **Solution**: Check that redirect URI in Google Console matches exactly: `http://localhost:3000/auth/google/secrets`
+### Rutas Protegidas (requieren autenticación):
+- `GET /secrets` - Ver todos los secretos
+- `GET /submit` - Formulario de envío de secretos
+- `POST /submit` - Procesar envío de secreto
+- `GET /logout` - Cerrar sesión del usuario
 
-**Issue**: Session not persisting
-- **Solution**: Check that `SESSION_SECRET` is set in `.env` file
-
-**Issue**: "User already exists" error
-- **Solution**: Use a different username or clear the database
+### Rutas OAuth:
+- `GET /auth/google` - Iniciar OAuth de Google
+- `GET /auth/google/secrets` - Callback de OAuth de Google
 
 ---
 
-## 🎉 All Requirements Completed!
+## 🐛 Solución de Problemas
 
-✅ Registration form with username, email, password
-✅ Passport-local-mongoose for authentication
-✅ Session management with automatic access to secrets
-✅ Login form for existing users
-✅ Logout functionality
-✅ Protected routes (cannot access directly)
-✅ Environment variables for secrets
-✅ Google OAuth 2.0 implementation
-✅ Cookie parser with session cookies
-✅ Extra feature: Secret submission and viewing
+**Problema**: No se puede conectar a MongoDB
+- **Solución**: Asegúrate de que MongoDB esté corriendo en `mongodb://127.0.0.1:27017/`
 
-The application is ready to use!
+**Problema**: Google OAuth no funciona
+- **Solución**: Verifica que la URI de redirección en Google Console coincida exactamente: `http://localhost:3000/auth/google/secrets`
+
+**Problema**: La sesión no persiste
+- **Solución**: Verifica que `SESSION_SECRET` esté configurado en el archivo `.env`
+
+**Problema**: Error "El usuario ya existe"
+- **Solución**: Usa un nombre de usuario diferente o limpia la base de datos
+
+---
+
+## 🎉 ¡Todos los Requisitos Completados!
+
+✅ Formulario de registro con username, email, password
+✅ Passport-local-mongoose para autenticación
+✅ Gestión de sesiones con acceso automático a secretos
+✅ Formulario de login para usuarios existentes
+✅ Funcionalidad de logout
+✅ Rutas protegidas (no se puede acceder directamente)
+✅ Variables de entorno para secretos
+✅ Implementación de Google OAuth 2.0
+✅ Cookie parser con cookies de sesión
+✅ Característica extra: Envío y visualización de secretos
+
+¡La aplicación está lista para usar!

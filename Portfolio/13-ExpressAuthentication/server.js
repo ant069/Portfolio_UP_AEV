@@ -31,7 +31,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 const mongoUrl = "mongodb://127.0.0.1:27017/LOTR";
-mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(mongoUrl)
+  .then(() => console.log("✅ MongoDB conectado exitosamente"))
+  .catch((err) => console.log("⚠️  MongoDB no disponible:", err.message));
 
 // Definition of a schema
 const userSchema = new mongoose.Schema({
